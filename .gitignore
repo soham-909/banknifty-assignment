@@ -1,5 +1,4 @@
 data/
 5min_candles/
-*.parquet.gz
-.config/
-sample_data/
+venv/
+__pycache__/
