@@ -90,6 +90,28 @@ def calculate_fibonacci_pivots(df: pd.DataFrame, filename: str):
     print(f"S2: {P - 0.618 * diff:.2f}")
     print(f"S3: {P - diff:.2f}")
 
+# ========================
+# DETERMINING THE TREND
+# ========================
+
+def compare_adjacent_highs(candles_5min: pd.DataFrame, filename: str):
+    print(f"\n High comparison for {filename}")
+
+    highs = candles_5min["high"].values
+    timestamps = candles_5min.index
+
+    for i in range(1, len(highs)):
+        if highs[i] > highs[i - 1]:
+            status = "INCREASING "
+        elif highs[i] < highs[i - 1]:
+            status = "DECREASING "
+        else:
+            status = "UNCHANGED ⏸"
+
+        print(
+            f"{timestamps[i-1]} → {timestamps[i]} | "
+            f"{highs[i-1]} → {highs[i]} | {status}"
+        )
 
 # ========================
 # MAIN PIPELINE
@@ -117,6 +139,9 @@ def main():
 
         # Bonus calculation
         calculate_fibonacci_pivots(df, file)
+
+        # Compare adjacent highs
+        compare_adjacent_highs(candles_5min, file)
 
     print("\nAssignment execution completed successfully.")
 
